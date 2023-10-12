@@ -61,6 +61,7 @@ public class RecruitService {
     public RecruitDetailResponseDto getRecruit(Long id) {
         Recruit recruit = isPresentRecruit(id);
         List<Long> recruitIdList = recruitRepository.findRecruitId(recruit.getCompany().getId());
+        recruitIdList.remove(recruit.getId());
         return new RecruitDetailResponseDto(recruitIdList, recruit);
     }
 
