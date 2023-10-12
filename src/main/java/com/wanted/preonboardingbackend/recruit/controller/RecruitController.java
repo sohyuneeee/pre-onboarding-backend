@@ -51,41 +51,60 @@ public class RecruitController {
         return new ResponseDto<>(recruitResponseDto);
     }
 
-//    @DeleteMapping("/api/recruit/{id}")
-//    public ResponseDto<String> deleteRecruit(@PathVariable Long id) {
-//        try {
-//            recruitService.deleteRecruit(id);
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-//            return new ResponseDto<>(null, ErrorCode.INVALID_ERROR);
-//        }
-//        String data = "delete success";
-//        return new ResponseDto<>(data);
-//    }
-//
-//    @GetMapping("/api/recruit")
-//    public ResponseDto<List<RecruitListResponseDto>> getAllRecruit() {
-//        List<RecruitListResponseDto> data;
-//        try {
-//            data = recruitService.getAllRecruit();
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-//            return new ResponseDto<>(null, ErrorCode.INVALID_ERROR);
-//        }
-//        return new ResponseDto<>(data);
-//    }
-//
-//    @GetMapping("/api/recruit/{id}")
-//    public ResponseDto<RecruitDetailResponseDto> getRecruit(@PathVariable Long id) {
-//        RecruitDetailResponseDto recruitDetailResponseDto;
-//        try {
-//            recruitDetailResponseDto = recruitService.getRecruit(id);
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-//            return new ResponseDto<>(null, ErrorCode.INVALID_ERROR);
-//        }
-//        return new ResponseDto<>(recruitDetailResponseDto);
-//    }
+    @DeleteMapping("/api/recruit/{id}")
+    public ResponseDto<String> deleteRecruit(@PathVariable Long id) {
+        try {
+            recruitService.deleteRecruit(id);
+        } catch (CustomException e) {
+            log.error(e.getMessage());
+            return new ResponseDto<>(null, e.getErrorCode());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseDto<>(null, ErrorCode.INVALID_ERROR);
+        }
+        String data = "delete success";
+        return new ResponseDto<>(data);
+    }
+
+    @GetMapping("/api/recruit")
+    public ResponseDto<List<RecruitListResponseDto>> getAllRecruit() {
+        List<RecruitListResponseDto> data;
+        try {
+            data = recruitService.getAllRecruit();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseDto<>(null, ErrorCode.INVALID_ERROR);
+        }
+        return new ResponseDto<>(data);
+    }
+
+    @GetMapping("/api/recruit/{id}")
+    public ResponseDto<RecruitDetailResponseDto> getRecruit(@PathVariable Long id) {
+        RecruitDetailResponseDto recruitDetailResponseDto;
+        try {
+            recruitDetailResponseDto = recruitService.getRecruit(id);
+        } catch (CustomException e) {
+            log.error(e.getMessage());
+            return new ResponseDto<>(null, ErrorCode.ENTITY_NOT_FOUND);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseDto<>(null, ErrorCode.INVALID_ERROR);
+        }
+        return new ResponseDto<>(recruitDetailResponseDto);
+    }
+
+    @GetMapping("api/recruit/search")
+    public ResponseDto<List<RecruitListResponseDto>> searchRecruit(@RequestParam(value = "keyword") String keyword) {
+        List<RecruitListResponseDto> data;
+        try {
+            data = recruitService.searchRecruit(keyword);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseDto<>(null, ErrorCode.INVALID_ERROR);
+        }
+        return new ResponseDto<>(data);
+
+    }
 
 
 }
