@@ -1,4 +1,4 @@
-현package com.wanted.preonboardingbackend.company.service;
+package com.wanted.preonboardingbackend.company.service;
 
 import com.wanted.preonboardingbackend.company.domain.Company;
 import com.wanted.preonboardingbackend.company.dto.CompanyRequestDto;
