@@ -11,7 +11,6 @@ import com.wanted.preonboardingbackend.recruit.service.RecruitService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -85,7 +84,7 @@ public class RecruitController {
             recruitDetailResponseDto = recruitService.getRecruit(id);
         } catch (CustomException e) {
             log.error(e.getMessage());
-            return new ResponseDto<>(null, ErrorCode.ENTITY_NOT_FOUND);
+            return new ResponseDto<>(null, e.getErrorCode());
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseDto<>(null, ErrorCode.INVALID_ERROR);
@@ -105,6 +104,4 @@ public class RecruitController {
         return new ResponseDto<>(data);
 
     }
-
-
 }

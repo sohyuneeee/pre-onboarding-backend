@@ -15,6 +15,5 @@ public class ApplyResponseDto {
         this.applyId = apply.getId();
         this.recruitId = apply.getRecruit().getId();
         this.memberId = apply.getMember().getId();
-
     }
 }

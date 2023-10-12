@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @Entity
@@ -37,5 +36,4 @@ public class Company {
         this.country = companyRequestDto.getCountry();
         this.city = companyRequestDto.getCity();
     }
-
 }
