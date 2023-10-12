@@ -1,5 +1,6 @@
 package com.wanted.preonboardingbackend.recruit.domain;
 
+import com.wanted.preonboardingbackend.apply.domain.Apply;
 import com.wanted.preonboardingbackend.company.domain.Company;
 import com.wanted.preonboardingbackend.recruit.dto.RecruitRequestDto;
 import jakarta.persistence.*;
@@ -7,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -35,6 +38,9 @@ public class Recruit {
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
+
+    @OneToMany(mappedBy = "recruit", cascade = CascadeType.REMOVE)
+    private List<Apply> applyList;
 
     public Recruit(RecruitRequestDto recruitRequestDto) {
         this.position = recruitRequestDto.getPosition();
