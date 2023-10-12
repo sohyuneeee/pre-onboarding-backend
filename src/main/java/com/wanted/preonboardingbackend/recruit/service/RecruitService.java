@@ -14,7 +14,6 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,13 +29,8 @@ public class RecruitService {
     @Transactional
     public RecruitResponseDto createRecruit(RecruitRequestDto recruitRequestDto) {
         Company company = isPresentCompany(recruitRequestDto.getCompanyId());
-        Recruit recruit = recruitRepository.save(Recruit.builder()
-                .company(company)
-                .position(recruitRequestDto.getPosition())
-                .reward(recruitRequestDto.getReward())
-                .content(recruitRequestDto.getContent())
-                .techStack(recruitRequestDto.getTechStack())
-                .build());
+        Recruit recruit = new Recruit(recruitRequestDto, company);
+        recruitRepository.save(recruit);
         return new RecruitResponseDto(recruit);
     }
 
@@ -49,7 +43,8 @@ public class RecruitService {
             throw new CustomException(ErrorCode.ENTITY_NOT_FOUND);
         }
 
-        recruit.update(recruitRequestDto.getPosition(), recruitRequestDto.getReward(), recruitRequestDto.getContent(), recruitRequestDto.getTechStack());
+        recruit.update(recruitRequestDto.getPosition(), recruitRequestDto.getReward(),
+                recruitRequestDto.getContent(), recruitRequestDto.getTechStack());
         return new RecruitResponseDto(recruit);
     }
 
@@ -59,43 +54,33 @@ public class RecruitService {
     }
 
     public List<RecruitListResponseDto>  getAllRecruit() {
-        List<RecruitListResponseDto> responseDtoList = new ArrayList<>();
         List<Recruit> recruitList = recruitRepository.findAll();
-        for(Recruit recruit : recruitList) {
-            RecruitListResponseDto responseDto = RecruitListResponseDto.builder()
-                    .recruitId(recruit.getId())
-                    .companyName(recruit.getCompany().getCompanyName())
-                    .country(recruit.getCompany().getCountry())
-                    .city(recruit.getCompany().getCity())
-                    .position(recruit.getPosition())
-                    .reward(recruit.getReward())
-                    .techStack(recruit.getTechStack())
-                    .build();
-            responseDtoList.add(responseDto);
-        }
-        return responseDtoList;
+        return recruitListResponseDtoList(recruitList);
     }
 
     public RecruitDetailResponseDto getRecruit(Long id) {
         Recruit recruit = isPresentRecruit(id);
         List<Long> recruitIdList = recruitRepository.findRecruitId(recruit.getCompany().getId());
-        RecruitDetailResponseDto responseDto = RecruitDetailResponseDto.builder()
-                .recruitId(recruit.getId())
-                .companyName(recruit.getCompany().getCompanyName())
-                .country(recruit.getCompany().getCountry())
-                .city(recruit.getCompany().getCity())
-                .position(recruit.getPosition())
-                .reward(recruit.getReward())
-                .techStack(recruit.getTechStack())
-                .content(recruit.getContent())
-                .recruitIdList(recruitIdList)
-                .build();
-        return responseDto;
+        return new RecruitDetailResponseDto(recruitIdList, recruit);
     }
 
     public List<RecruitListResponseDto> searchRecruit (String keyword) {
-        List<RecruitListResponseDto> responseDtoList = new ArrayList<>();
         List<Recruit> recruitList = recruitRepository.findAllByKeyword(keyword);
+        return recruitListResponseDtoList(recruitList);
+    }
+
+    public Company isPresentCompany(Long id) {
+        Optional<Company> company = companyRepository.findById(id);
+        return company.orElseThrow(() -> new CustomException(ErrorCode.COMPANY_NOT_FOUND));
+    }
+
+    public Recruit isPresentRecruit(Long id) {
+        Optional<Recruit> recruit = recruitRepository.findById(id);
+        return recruit.orElseThrow(() -> new CustomException(ErrorCode.RECRUITMENT_NOT_FOUND));
+    }
+
+    private static List<RecruitListResponseDto> recruitListResponseDtoList(List<Recruit> recruitList) {
+        List<RecruitListResponseDto> responseDtoList = new ArrayList<>();
         for(Recruit recruit : recruitList) {
             RecruitListResponseDto responseDto = RecruitListResponseDto.builder()
                     .recruitId(recruit.getId())
@@ -110,15 +95,4 @@ public class RecruitService {
         }
         return responseDtoList;
     }
-
-    public Company isPresentCompany(Long id) {
-        Optional<Company> company = companyRepository.findById(id);
-        return company.orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND));
-    }
-
-    public Recruit isPresentRecruit(Long id) {
-        Optional<Recruit> recruit = recruitRepository.findById(id);
-        return recruit.orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND));
-    }
-
 }

@@ -24,7 +24,7 @@ public class MemberController {
             memberResponseDto = memberService.signup(memberRequestDto);
         } catch (CustomException e) {
             log.error(e.getMessage());
-            return new ResponseDto<>(null, ErrorCode.DUPLICATION_NICKNAME);
+            return new ResponseDto<>(null, e.getErrorCode());
         }
         catch (Exception e) {
             log.error(e.getMessage());

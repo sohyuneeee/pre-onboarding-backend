@@ -24,20 +24,18 @@ public class ApplyService {
     public ApplyResponseDto apply (Long recruitId, Long memberId) {
         Recruit recruit = isPresentRecruit(recruitId);
         Member member = isPresentMember(memberId);
-        Apply apply = applyRepository.save(Apply.builder()
-                        .recruit(recruit)
-                        .member(member).build());
+        Apply apply = new Apply(recruit, member);
+        applyRepository.save(apply);
         return new ApplyResponseDto(apply);
     }
 
     public Recruit isPresentRecruit(Long id) {
         Optional<Recruit> recruit = recruitRepository.findById(id);
-        return recruit.orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND));
+        return recruit.orElseThrow(() -> new CustomException(ErrorCode.RECRUITMENT_NOT_FOUND));
     }
 
     public Member isPresentMember(Long id) {
         Optional<Member> member = memberRepository.findById(id);
-        return member.orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND));
+        return member.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
     }
-
 }

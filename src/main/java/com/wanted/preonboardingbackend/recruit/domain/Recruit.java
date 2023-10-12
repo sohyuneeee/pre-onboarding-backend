@@ -5,7 +5,6 @@ import com.wanted.preonboardingbackend.company.domain.Company;
 import com.wanted.preonboardingbackend.recruit.dto.RecruitRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Builder
 public class Recruit {
 
     @Id
@@ -42,11 +40,12 @@ public class Recruit {
     @OneToMany(mappedBy = "recruit", cascade = CascadeType.REMOVE)
     private List<Apply> applyList;
 
-    public Recruit(RecruitRequestDto recruitRequestDto) {
+    public Recruit(RecruitRequestDto recruitRequestDto, Company company) {
         this.position = recruitRequestDto.getPosition();
         this.reward = recruitRequestDto.getReward();
         this.content = recruitRequestDto.getContent();
         this.techStack = recruitRequestDto.getTechStack();
+        this.company = company;
     }
 
     public void update(String position, int reward, String content, String techStack) {

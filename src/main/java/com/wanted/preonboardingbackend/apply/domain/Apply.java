@@ -4,7 +4,6 @@ import com.wanted.preonboardingbackend.member.domain.Member;
 import com.wanted.preonboardingbackend.recruit.domain.Recruit;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Builder
 public class Apply {
 
     @Id
@@ -28,4 +26,8 @@ public class Apply {
     @JoinColumn(name = "recruid_id", nullable = false)
     private Recruit recruit;
 
+    public Apply (Recruit recruit, Member member) {
+        this.member = member;
+        this.recruit = recruit;
+    }
 }

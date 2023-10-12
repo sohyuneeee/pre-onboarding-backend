@@ -1,5 +1,6 @@
 package com.wanted.preonboardingbackend.company.controller;
 
+import com.wanted.preonboardingbackend.CustomException;
 import com.wanted.preonboardingbackend.ErrorCode;
 import com.wanted.preonboardingbackend.ResponseDto;
 import com.wanted.preonboardingbackend.company.dto.CompanyRequestDto;
@@ -22,7 +23,11 @@ public class CompanyController {
         CompanyResponseDto companyResponseDto;
         try {
             companyResponseDto = companyService.createCompany(companyRequestDto);
-        } catch (Exception e) {
+        }catch (CustomException e) {
+            log.error(e.getMessage());
+            return new ResponseDto<>(null, e.getErrorCode());
+        }
+        catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseDto<>(null, ErrorCode.INVALID_ERROR);
         }

@@ -24,7 +24,7 @@ public class ApplyController {
             applyResponseDto = applyService.apply(recruitId, memberId);
         } catch (CustomException e) {
             log.error(e.getMessage());
-            return new ResponseDto<>(null, ErrorCode.ENTITY_NOT_FOUND);
+            return new ResponseDto<>(null, e.getErrorCode());
         }
         catch (Exception e) {
             log.error(e.getMessage());
