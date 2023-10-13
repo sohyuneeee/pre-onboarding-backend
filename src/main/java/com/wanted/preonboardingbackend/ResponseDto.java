@@ -1,11 +1,9 @@
 package com.wanted.preonboardingbackend;
 
-import com.wanted.preonboardingbackend.ErrorCode;
 import lombok.Getter;
 
 @Getter
 public class ResponseDto<T> {
-
     boolean success;
     T data;
     Error error;
@@ -30,7 +28,6 @@ public class ResponseDto<T> {
 
     @Getter
     public static class Error {
-
         private String code;
         private String message;
 
