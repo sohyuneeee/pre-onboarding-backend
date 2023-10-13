@@ -2,6 +2,7 @@ package com.wanted.preonboardingbackend.recruit.service;
 
 import com.wanted.preonboardingbackend.CustomException;
 import com.wanted.preonboardingbackend.ErrorCode;
+import com.wanted.preonboardingbackend.ResponseDto;
 import com.wanted.preonboardingbackend.company.domain.Company;
 import com.wanted.preonboardingbackend.company.repository.CompanyRepository;
 import com.wanted.preonboardingbackend.recruit.domain.Recruit;
@@ -67,6 +68,7 @@ public class RecruitService {
 
     public List<RecruitListResponseDto> searchRecruit (String keyword) {
         List<Recruit> recruitList = recruitRepository.findAllByKeyword(keyword);
+        if(recruitList.isEmpty()) throw new CustomException(ErrorCode.ENTITY_NOT_FOUND);
         return recruitListResponseDtoList(recruitList);
     }
 

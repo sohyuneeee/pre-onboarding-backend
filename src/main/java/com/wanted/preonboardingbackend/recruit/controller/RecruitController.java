@@ -97,6 +97,9 @@ public class RecruitController {
         List<RecruitListResponseDto> data;
         try {
             data = recruitService.searchRecruit(keyword);
+        } catch (CustomException e) {
+            log.error(e.getMessage());
+            return new ResponseDto<>(null, e.getErrorCode());
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseDto<>(null, ErrorCode.INVALID_ERROR);
