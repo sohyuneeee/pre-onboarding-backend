@@ -304,7 +304,7 @@
 //Response
 
 {
-    "success": **true**,
+    "success": true,
     "data": [
         {
             "recruitId": 1,
@@ -323,7 +323,7 @@
             "position": "백엔드 주니어 개발자",
             "reward": 500000,
             "techStack": "Python"
-        }, …
+        }, ...
     ],
     "error": null
 }
@@ -432,6 +432,21 @@
 }
 ```
 
+- **중복 지원 시**
+    
+    ```json
+    //Response
+    
+    {
+        "success": false,
+        "data": null,
+        "error": {
+            "code": "DUPLICATION_APPLY",
+            "message": "지원은 한 번만 가능합니다."
+        }
+    }
+    ```
+
 - **해당 멤버가 존재하지 않을 경우**
     
     ```json
@@ -461,18 +476,4 @@
         }
     }
     ```
-    
-- **중복 지원 시**
-    
-    ```json
-    //Response
-    
-    {
-        "success": false,
-        "data": null,
-        "error": {
-            "code": "DUPLICATION_APPLY",
-            "message": "지원은 한 번만 가능합니다."
-        }
-    }
-    ```
+  
