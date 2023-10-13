@@ -18,7 +18,7 @@ public class ApplyController {
     private final ApplyService applyService;
 
     @PostMapping("api/apply/{recruitId}/{memberId}")
-    public ResponseDto<ApplyResponseDto> apply (@PathVariable Long recruitId, @PathVariable Long memberId) {
+    public ResponseDto<ApplyResponseDto> apply(@PathVariable Long recruitId, @PathVariable Long memberId) {
         ApplyResponseDto applyResponseDto;
         try {
             applyResponseDto = applyService.apply(recruitId, memberId);

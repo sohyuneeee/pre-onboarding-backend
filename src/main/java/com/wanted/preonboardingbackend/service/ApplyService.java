@@ -22,6 +22,7 @@ public class ApplyService {
     private final MemberRepository memberRepository;
 
     public ApplyResponseDto apply (Long recruitId, Long memberId) {
+        checkDuplication(recruitId, memberId);
         Recruit recruit = isPresentRecruit(recruitId);
         Member member = isPresentMember(memberId);
         Apply apply = new Apply(recruit, member);
@@ -37,5 +38,12 @@ public class ApplyService {
     public Member isPresentMember(Long id) {
         Optional<Member> member = memberRepository.findById(id);
         return member.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+    }
+
+    private void checkDuplication(Long recruitId, Long memberId) {
+        Optional<Apply> apply = applyRepository.findByRecruitIdAndMemberId(recruitId, memberId);
+        if(apply.isPresent()) {
+            throw new CustomException(ErrorCode.DUPLICATION_APPLY);
+        }
     }
 }

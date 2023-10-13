@@ -10,6 +10,7 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND("MEMBER_NOT_FOUND", "사용자를 찾을 수 없습니다."),
     DUPLICATION_NICKNAME("DUPLICATION_NICKNAME", "중복된 아이디입니다."),
     DUPLICATION_COMPANY("DUPLICATION_COMPANY", "이미 존재하는 기업입니다."),
+    DUPLICATION_APPLY("DUPLICATION_APPLY", "지원은 한 번만 가능합니다."),
     INVALID_ERROR("INVALID_ERROR", "에러 발생");
 
     private final String code;
