@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
     private final MemberService memberService;
     @PostMapping("api/member")
-    public ResponseDto<MemberResponseDto> signup (@RequestBody MemberRequestDto memberRequestDto) {
+    public ResponseDto<MemberResponseDto> signup(@RequestBody MemberRequestDto memberRequestDto) {
         MemberResponseDto memberResponseDto;
         try {
             memberResponseDto = memberService.signup(memberRequestDto);

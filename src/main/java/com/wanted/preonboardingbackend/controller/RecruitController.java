@@ -105,6 +105,5 @@ public class RecruitController {
             return new ResponseDto<>(null, ErrorCode.INVALID_ERROR);
         }
         return new ResponseDto<>(data);
-
     }
 }
