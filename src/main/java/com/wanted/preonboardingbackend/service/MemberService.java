@@ -24,7 +24,7 @@ public class MemberService {
     private void checkDuplicationUsername(String username) {
         Optional<Member> optionalMember = memberRepository.findByUsername(username);
         if(optionalMember.isPresent()) {
-            throw new CustomException(ErrorCode.DUPLICATION_NICKNAME);
+            throw new CustomException(ErrorCode.DUPLICATION_USERNAME);
         }
     }
 }
