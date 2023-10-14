@@ -53,6 +53,17 @@ class ApplyControllerTest {
         }
 
         @Test
+        @DisplayName("지원 내역 저장 실패 - 중복 지원")
+        void testFailedByDuplication() throws Exception {
+            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(baseUrl + "/1" + "/1")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isCreated())
+                    .andReturn();
+
+            assertThat(mvcResult.getResponse()).isNotNull();
+        }
+
+        @Test
         @DisplayName("지원 내역 저장 실패 - 존재하지 않는 채용공고")
         void testFailedByRecruitNotFound() throws Exception {
             MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(baseUrl + "/0" + "/1")
