@@ -10,6 +10,7 @@ import com.wanted.preonboardingbackend.dto.responseDto.RecruitResponseDto;
 import com.wanted.preonboardingbackend.service.RecruitService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class RecruitController {
     private final RecruitService recruitService;
 
     @PostMapping("/api/recruit")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseDto<RecruitResponseDto> createRecruit(@RequestBody RecruitRequestDto recruitRequestDto) {
         RecruitResponseDto recruitResponseDto;
         try {
@@ -36,6 +38,7 @@ public class RecruitController {
     }
 
     @PutMapping("/api/recruit/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseDto<RecruitResponseDto> updateRecruit(@PathVariable Long id, @RequestBody RecruitRequestDto recruitRequestDto) {
         RecruitResponseDto recruitResponseDto;
         try {
@@ -51,6 +54,7 @@ public class RecruitController {
     }
 
     @DeleteMapping("/api/recruit/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseDto<String> deleteRecruit(@PathVariable Long id) {
         try {
             recruitService.deleteRecruit(id);
@@ -66,6 +70,7 @@ public class RecruitController {
     }
 
     @GetMapping("/api/recruit")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseDto<List<RecruitListResponseDto>> getAllRecruit() {
         List<RecruitListResponseDto> data;
         try {
@@ -78,6 +83,7 @@ public class RecruitController {
     }
 
     @GetMapping("/api/recruit/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseDto<RecruitDetailResponseDto> getRecruit(@PathVariable Long id) {
         RecruitDetailResponseDto recruitDetailResponseDto;
         try {
@@ -93,6 +99,7 @@ public class RecruitController {
     }
 
     @GetMapping("api/recruit/search")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseDto<List<RecruitListResponseDto>> searchRecruit(@RequestParam(value = "keyword") String keyword) {
         List<RecruitListResponseDto> data;
         try {
