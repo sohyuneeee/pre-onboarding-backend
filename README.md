@@ -1,5 +1,12 @@
 # wanted-pre-onboarding-backend
 <br><br>
+## 0. 개발 시스템 환경
+- JAVA
+- Spring Boot
+- JPA
+- MySQL
+
+<br><br>
 ## 1. 요구사항 분석
 (1) 회사는 **채용공고**를 `등록`합니다.
 
